@@ -18,7 +18,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DropdownModule } from 'primeng/dropdown';
 import { PasswordModule } from 'primeng/password';
 import { FormDepartmentComponent } from '@vks/app/pages/department-management/screens/components/form-department/form-department.component';
-
+import { NotificationService } from '@vks/app/services';
+import { MessageService } from 'primeng/api';
 @NgModule({
   declarations: [DepartmentManagementComponent, FormDepartmentComponent],
   imports: [
@@ -41,6 +42,7 @@ import { FormDepartmentComponent } from '@vks/app/pages/department-management/sc
   providers: [
     DepartmentManagementStateService,
     DepartmentManagementHttpService,
+    NotificationService,
   ],
 })
 export class DepartmentManagementModule {}

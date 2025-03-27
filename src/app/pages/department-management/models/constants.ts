@@ -5,7 +5,7 @@ import {
   ITableHeaderConfig,
 } from '@vks/app/shared/ui-common/table-common/table.common.config';
 import { KeyAction } from '@vks/app/shared/models';
-
+import { DepartmentCode, RoleAccount } from '@vks/app/shared/models';
 //List Account config
 export const DefaultFilterData: IFilterForm = {
   username: '',
@@ -28,25 +28,32 @@ export const ListAccountActionConfig: actionConfig[] = [
 
 export const FilterConfig: FilterFieldConfig[] = [
   {
-    type: 'text',
+    type: 'select',
     label: 'Mã phòng ban',
     name: 'departmentId',
+    options: Object.values(DepartmentCode).map((code) => ({
+      label: code,
+      value: code,
+    })),
     placeholder: 'Nhập mã phòng ban',
     col: 3,
   },
   {
     type: 'text',
-    label: 'Tên phòng ban',
-    name: 'departmentName',
-    placeholder: 'Nhập tên phòng ban',
+    label: 'Tên nhân viên',
+    name: 'fullName',
+    placeholder: 'Nhập tên nhân viên',
     col: 3,
   },
   {
-    type: 'text',
-    label: 'Tên trưởng phòng',
-    name: 'roleName',
-    options: [],
-    placeholder: 'Nhập tên trưởng phòng',
+    type: 'select',
+    label: 'Vị trí',
+    name: 'roleId',
+    options: Object.values(RoleAccount).map((role) => ({
+      label: role,
+      value: role,
+    })),
+    placeholder: 'Vị trí',
     col: 3,
   },
   {
@@ -57,22 +64,6 @@ export const FilterConfig: FilterFieldConfig[] = [
     placeholder: 'Nhập đơn vị',
     col: 3,
   },
-  // {
-  //   type: 'date',
-  //   label: 'Từ ngày',
-  //   name: 'fromDate',
-  //   placeholder: 'Lọc từ ngày',
-  //   action: KeyAction.SELECT_DATE_FROM_TO,
-  //   col: 3,
-  // },
-  // {
-  //   type: 'date',
-  //   label: 'Đến ngày',
-  //   name: 'toDate',
-  //   placeholder: 'Lọc đến ngày',
-  //   action: KeyAction.SELECT_DATE_TO,
-  //   col: 3,
-  // },
 ];
 
 export const ConfigHeader: ITableHeaderConfig[] = [
@@ -85,12 +76,17 @@ export const ConfigHeader: ITableHeaderConfig[] = [
     name: 'Mã phòng ban',
   },
   {
-    key: 'departmentName',
+    key: 'departmentId',
     name: 'Tên phòng ban',
+    pipe: 'vks-format-department',
   },
   {
-    key: 'roleName',
-    name: 'Trưởng phòng',
+    key: 'fullName',
+    name: 'Tên nhân viên',
+  },
+  {
+    key: 'roleId',
+    name: 'Vị trí',
     pipe: 'vks-format-role',
   },
   {

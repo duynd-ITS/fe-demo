@@ -34,6 +34,7 @@ import { rowsPerPageOptions } from '@vks/app/shared/models';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FormatDeviceStatusPipe } from '@vks/app/shared/pipe/format-device-status.pipe';
 import { FormatDatePipe } from '../../pipe';
+import { FormatDepartmentPipe } from '../../pipe/format-department.pipe';
 
 @Component({
   selector: 'vks-table-common',
@@ -47,6 +48,7 @@ import { FormatDatePipe } from '../../pipe';
     DecimalPipe,
     FormatAccountStatusPipe,
     FormatDeviceStatusPipe,
+    FormatDepartmentPipe,
   ], // Đăng kí thêm Pipe ở đây
   imports: [
     TableModule,
@@ -113,6 +115,9 @@ export class TableCommonComponent implements OnInit, OnChanges {
         break;
       case 'vks-format-device-status':
         pipe = this.injector.get(FormatDeviceStatusPipe);
+        break;
+      case 'vks-format-department':
+        pipe = this.injector.get(FormatDepartmentPipe);
         break;
       default:
         return value;

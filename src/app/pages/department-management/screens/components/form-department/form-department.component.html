@@ -1,58 +1,63 @@
-<div class="p-3 form-account">
-    <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" class="employee-form">
-        <div class="form-group">
-            <label for="departmentId" class="form-label require">Mã phòng ban</label>
-            <div class="form-input">
-                <input id="username" pInputText formControlName="departmentId"
-                    [value]="mode === 'EDIT' ? departmentDetail.departmentId : ''"
-                    [class.invalid]="isFieldInvalid('departmentId')" />
-                @if(isFieldInvalid('departmentId')) {
-                <div>
-                    <small class="p-error">Mã phòng ban là bắt buộc</small>
+<div class="p-3 form-department  ">
+    <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()"
+        class="employee-form flex flex-column justify-content-between h-30rem">
+        <div class="grid">
+            <div class="form-group col-3">
+                <label for="departmentId" class="form-label require">Mã phòng ban</label>
+                <div class="form-input">
+                    <p-dropdown formControlName="departmentId" [options]="listDepartments" [optionValue]="'value'"
+                        [optionLabel]="'label'" [placeholder]="'Hãy chọn phòng ban'"
+                        [class.invalid]="isFieldInvalid('departmentId')">
+                    </p-dropdown>
+                    @if(isFieldInvalid('departmentId')) {
+                    <div>
+                        <small class="p-error">Mã phòng ban là bắt buộc</small>
+                    </div>
+                    }
                 </div>
-                }
             </div>
-        </div>
 
-        <div class="form-group">
-            <label for="departmentName" class="form-label require">Tên phòng ban</label>
-            <div class="form-input">
-                <input id="username" pInputText formControlName="departmentName"
-                    [value]="mode === 'EDIT' ? departmentDetail.departmentName : ''"
-                    [class.invalid]="isFieldInvalid('departmentName')" />
-                @if(isFieldInvalid('departmentName')) {
-                <div>
-                    <small class="p-error">Tên phòng ban là bắt buộc</small>
+            <div class="form-group col-3">
+                <label for="fullName" class="form-label require">Tên nhân viên</label>
+                <div class="form-input">
+                    <input id="roleName" pInputText formControlName="fullName"
+                        [value]="mode === 'EDIT' ? departmentDetail.fullName : ''"
+                        [class.invalid]="isFieldInvalid('fullName')" />
+                    @if(isFieldInvalid('fullName')) {
+                    <div>
+                        <small class="p-error">Tên nhân viên là bắt buộc</small>
+                    </div>
+                    }
                 </div>
-                }
             </div>
-        </div>
 
-        <div class="form-group">
-            <label for="roleName" class="form-label require">Tên trưởng phòng</label>
-            <div class="form-input">
-                <input id="roleName" pInputText formControlName="roleName"
-                    [value]="mode === 'EDIT' ? departmentDetail.roleName : ''"
-                    [class.invalid]="isFieldInvalid('roleName')" />
-                @if(isFieldInvalid('roleName')) {
-                <div>
-                    <small class="p-error">Tên trưởng phòng là bắt buộc</small>
+            <div class="form-group col-3">
+                <label for="roleId" class="form-label require">Chức vụ</label>
+                <div class="form-input">
+                    <p-dropdown id="roleId" formControlName="roleId" [options]="listRoles" [optionValue]="'value'"
+                        [optionLabel]="'label'" placeholder="Hãy chọn chức vụ"
+                        [class.invalid]="isFieldInvalid('roleId')"></p-dropdown>
+
+                    @if(isFieldInvalid('roleId')) {
+                    <div>
+                        <small class="p-error">Chức vụ là bắt buộc</small>
+                    </div>
+                    }
                 </div>
-                }
             </div>
-        </div>
 
-        <div class="form-group">
-            <label for="organizationName" class="form-label require">Tên đơn vị</label>
-            <div class="form-input">
-                <input id="username" pInputText formControlName="organizationName"
-                    [value]="mode === 'EDIT' ? departmentDetail.organizationName : ''"
-                    [class.invalid]="isFieldInvalid('organizationName')" />
-                @if(isFieldInvalid('organizationName')) {
-                <div>
-                    <small class="p-error">Tên đơn vị là bắt buộc</small>
+            <div class="form-group col-3">
+                <label for="organizationName" class="form-label require">Tên đơn vị</label>
+                <div class="form-input">
+                    <input id="organizationName" pInputText formControlName="organizationName"
+                        [value]="mode === 'EDIT' ? departmentDetail.organizationName : ''"
+                        [class.invalid]="isFieldInvalid('organizationName')" />
+                    @if(isFieldInvalid('organizationName')) {
+                    <div>
+                        <small class="p-error">Tên đơn vị là bắt buộc</small>
+                    </div>
+                    }
                 </div>
-                }
             </div>
         </div>
         <div class="flex justify-content-end">

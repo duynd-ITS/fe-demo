@@ -47,8 +47,8 @@
     </vks-table-common>
 
     <p-dialog [modal]="true" [(visible)]="isVisibleModal"
-        [header]="modalMode === 'CREATE' ? 'Thêm mới phòng ban' : 'Sửa phòng ban'" [style]="{ width: '50%' }"
-        (onHide)="onCloseModal()">
+        [header]="modalMode === 'CREATE' ? 'Thêm mới phòng ban' : 'Sửa phòng ban'"
+        [style]="{ width: '60%', height: 'full' }" (onHide)="onCloseModal()">
         <vks-form-department (unActiveForm)="onCloseModal()" (forward)="onSubmit($event)" [mode]="modalMode"
             [departmentDetail]="selectedDepartment"></vks-form-department>
     </p-dialog>

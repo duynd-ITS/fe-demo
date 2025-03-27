@@ -3,11 +3,9 @@ export interface IInterfaces {}
 export interface IDepartmentForm {
   id?: number;
   departmentId: string;
-  departmentName: string;
-  roleName: string | null;
+  fullName: string;
+  roleId: string | null;
   organizationName: string | null;
-  // createdDate?: string;
-  // updatedDate?: string;
 }
 
 export interface IDepartmentData extends IDepartmentForm {
@@ -18,8 +16,8 @@ export interface IDepartmentData extends IDepartmentForm {
 export interface IDepartmentInfo {
   id: number;
   departmentId: string;
-  departmentName: string;
-  roleName: string;
+  fullName: string;
+  roleId: string;
   organizationName: string;
   createdDate: string;
   updatedDate: string;

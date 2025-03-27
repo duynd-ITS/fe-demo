@@ -5,4 +5,31 @@
 >
 
 </vks-table-common> -->
-<h1>Màn dash board</h1>
+<h1>Thống kê phòng ban</h1>
+<div class="flex flex-column">
+  <div>
+    <div class="grid">
+      <div class="col-8">
+        <vks-vertical-bar-chart [title]="'Thống kê số lượng nhân viên theo ban'" [data2]="departmentChartData"
+          [isStacked]="true" indexAxis="y" />
+      </div>
+      <div class="col-4">
+        <vks-doughnut-chart [title]="'Tổng số lượng nhân viên theo ban'" [dataCount]="departmentCounts"
+          [plugins]="[centerTextPlugin, chartValuePlugin]" [class]="'w-full h-full'" />
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="grid">
+      <div class="col-8">
+        <vks-vertical-bar-chart [title]="'Số lượng nhân viên theo đơn vị'" [data2]="roleChartData" [isStacked]="true" />
+
+      </div>
+      <div class="col-4">
+        <vks-doughnut-chart [title]="'Tổng số lượng nhân viên theo vị trí'" [dataCount]="roleCounts"
+          [plugins]="[centerTextPlugin, chartValuePlugin]" [class]="'w-full h-full'" />
+      </div>
+    </div>
+  </div>
+</div>

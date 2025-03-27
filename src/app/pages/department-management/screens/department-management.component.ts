@@ -26,6 +26,7 @@ import {
 import {
   CategoryService,
   LoadingService,
+  NotificationService,
   UserInfoService,
 } from '@vks/app/services';
 import { FormatDatePipe } from '@vks/app/shared/pipe';
@@ -57,8 +58,8 @@ export class DepartmentManagementComponent implements OnInit {
   selectedDepartment: IDepartmentForm = {
     id: 0,
     departmentId: '',
-    departmentName: '',
-    roleName: '',
+    fullName: '',
+    roleId: '',
     organizationName: '',
   };
 
@@ -71,7 +72,8 @@ export class DepartmentManagementComponent implements OnInit {
     private categoryService: CategoryService,
     private fomatDate: FormatDatePipe,
     private departmentManagementHttpService: DepartmentManagementHttpService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -246,25 +248,36 @@ export class DepartmentManagementComponent implements OnInit {
   }
 
   onRemove(item: IDepartmentInfo) {
-    // remove department by api
-    this.departmentManagementHttpService
-      .deleteDepartment(item.id)
-      .subscribe()
-      .add(() => {
-        // remove department from listDepartment
-        // this.listDepartment = this.listDepartment.filter(
-        //   (department) => department.id !== item.id
-        // );
-        this.departmentManagementHttpService
-          .getListDepartment()
-          .subscribe((res) => {
+    // Remove department by API
+    this.departmentManagementHttpService.deleteDepartment(item.id).subscribe({
+      next: () => {
+        // Once deleted, fetch updated department list
+        this.departmentManagementHttpService.getListDepartment().subscribe({
+          next: (res) => {
             this.listDepartment = res;
-          });
-      });
-    // // remove department from listDepartment
-    // this.listDepartment = this.listDepartment.filter(
-    //   (department) => department.id !== item.id
-    // );
+            this.notificationService.showMessage({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Xóa phòng ban thành công',
+            });
+          },
+          error: () => {
+            this.notificationService.showMessage({
+              severity: 'error',
+              summary: 'Lỗi',
+              detail: 'Không thể tải danh sách phòng ban sau khi xóa',
+            });
+          },
+        });
+      },
+      error: () => {
+        this.notificationService.showMessage({
+          severity: 'error',
+          summary: 'Lỗi',
+          detail: 'Xóa phòng ban thất bại',
+        });
+      },
+    });
   }
 
   onSubmit(formData: IDepartmentForm) {
@@ -277,14 +290,36 @@ export class DepartmentManagementComponent implements OnInit {
       };
       this.departmentManagementHttpService
         .createDepartment(newDepartment)
-        .subscribe()
-        .add(() => {
-          this.departmentManagementHttpService
-            .getListDepartment()
-            .subscribe((res) => {
-              this.listDepartment = res;
+        .subscribe({
+          next: () => {
+            this.departmentManagementHttpService.getListDepartment().subscribe({
+              next: (res) => {
+                this.listDepartment = res;
+                this.isVisibleModal = false;
+                this.notificationService.showMessage({
+                  severity: 'success',
+                  summary: 'Thành công',
+                  detail: 'Thêm mới phòng ban thành công',
+                });
+              },
+              error: () => {
+                this.isVisibleModal = false;
+                this.notificationService.showMessage({
+                  severity: 'error',
+                  summary: 'Lỗi',
+                  detail: 'Không thể tải danh sách phòng ban',
+                });
+              },
             });
-          this.isVisibleModal = false;
+          },
+          error: () => {
+            this.isVisibleModal = false;
+            this.notificationService.showMessage({
+              severity: 'error',
+              summary: 'Lỗi',
+              detail: 'Thêm mới phòng ban thất bại',
+            });
+          },
         });
     } else {
       console.log('update::', formData);
@@ -294,16 +329,37 @@ export class DepartmentManagementComponent implements OnInit {
       };
       this.departmentManagementHttpService
         .updateDepartment(this.selectedDepartment.id, updateDepartment)
-        .subscribe()
-        .add(() => {
-          this.departmentManagementHttpService
-            .getListDepartment()
-            .subscribe((res) => {
-              this.listDepartment = res;
+        .subscribe({
+          next: () => {
+            this.departmentManagementHttpService.getListDepartment().subscribe({
+              next: (res) => {
+                this.listDepartment = res;
+                this.isVisibleModal = false;
+                this.notificationService.showMessage({
+                  severity: 'success',
+                  summary: 'Thành công',
+                  detail: 'Cập nhật phòng ban thành công',
+                });
+              },
+              error: () => {
+                this.isVisibleModal = false;
+                this.notificationService.showMessage({
+                  severity: 'error',
+                  summary: 'Lỗi',
+                  detail: 'Không thể tải danh sách phòng ban',
+                });
+              },
             });
-          this.isVisibleModal = false;
+          },
+          error: () => {
+            this.isVisibleModal = false;
+            this.notificationService.showMessage({
+              severity: 'error',
+              summary: 'Lỗi',
+              detail: 'Cập nhật phòng ban thất bại',
+            });
+          },
         });
-      this.isVisibleModal = false;
     }
   }
 

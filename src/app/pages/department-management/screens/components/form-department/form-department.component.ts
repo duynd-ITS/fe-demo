@@ -18,13 +18,29 @@ import {
   IDepartmentForm,
   formMode,
 } from '@vks/app/pages/department-management/models';
-
+import {
+  DepartmentCode,
+  IDropdownItem,
+  RoleAccount,
+} from '@vks/app/shared/models';
 @Component({
   selector: 'vks-form-department',
   templateUrl: './form-department.component.html',
   styleUrl: './form-department.component.scss',
 })
 export class FormDepartmentComponent implements OnChanges {
+  listDepartments: IDropdownItem[] = Object.values(DepartmentCode).map(
+    (code) => ({
+      label: code,
+      value: code,
+    })
+  );
+
+  listRoles: IDropdownItem[] = Object.values(RoleAccount).map((role) => ({
+    label: role,
+    value: role,
+  }));
+
   @Input()
   mode: formMode = formMode.CREATE;
 
@@ -32,16 +48,16 @@ export class FormDepartmentComponent implements OnChanges {
   errors: Record<keyof IDepartmentForm, string[]> = {
     id: [],
     departmentId: [],
-    departmentName: [],
-    roleName: [],
+    fullName: [],
+    roleId: [],
     organizationName: [],
   };
 
   @Input()
   departmentDetail: Partial<IDepartmentForm> = {
     departmentId: '',
-    departmentName: '',
-    roleName: '',
+    fullName: '',
+    roleId: '',
     organizationName: '',
   };
 
@@ -54,8 +70,8 @@ export class FormDepartmentComponent implements OnChanges {
 
   departmentForm: FormGroup = this.formBuilder.group({
     departmentId: new FormControl('', [Validators.required]),
-    departmentName: new FormControl('', [Validators.required]),
-    roleName: new FormControl(''),
+    fullName: new FormControl('', [Validators.required]),
+    roleId: new FormControl('', [Validators.required]),
     organizationName: new FormControl(''),
   });
 

@@ -1,0 +1,8 @@
+<div class="card flex justify-content-center w-full h-full border-1 border-round-lg flex flex-column">
+    <div class="card-header flex justify-content-center">
+        <p class="text-center text-lg w-10 font-bold text-blue-400">{{title}}</p>
+    </div>
+    <div class="flex justify-content-center w-full h-full">
+        <p-chart type="doughnut" [data]="data" [options]="options" [plugins]="plugins" [class]="class" />
+    </div>
+</div>
